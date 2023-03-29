@@ -80,4 +80,16 @@ public class BookService {
         }
         return bookResponseDtoList;
     }
+
+    public void deleteBookById(int id) throws Exception {
+        Book book;
+        try{
+            book = bookRepository.findById(id).get();
+        }
+        catch (Exception e){
+            throw new Exception("Invalid Book ID");
+        }
+
+        bookRepository.deleteById(id);
+    }
 }

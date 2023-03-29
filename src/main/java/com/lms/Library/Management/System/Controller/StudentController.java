@@ -86,4 +86,21 @@ public class StudentController {
         }
         return new ResponseEntity<>(studentResponseDto, HttpStatus.OK);
     }
+
+    @GetMapping("/get-all-issued-books")
+    public ResponseEntity getAllIssuedBooksByStudent(@RequestParam("id") int id){
+        List<BookResponseDto> books;
+        try{
+            books = studentService.getAllIssuedBooksByStudent(id);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
+
+        if(books.size() == 0){
+            return new ResponseEntity<>("No Books Issued", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
 }

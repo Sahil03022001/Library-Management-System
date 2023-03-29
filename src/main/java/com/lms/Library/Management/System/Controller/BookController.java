@@ -49,4 +49,15 @@ public class BookController {
         }
         return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete-book")
+    public ResponseEntity deleteBookById(@RequestParam int id){
+        try{
+            bookService.deleteBookById(id);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Book Removed!", HttpStatus.OK);
+    }
 }

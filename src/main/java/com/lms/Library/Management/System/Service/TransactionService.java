@@ -115,6 +115,7 @@ public class TransactionService {
             if(bookList.get(i).getId() == book.getId()){
                 transaction.setMessage("Transaction Successful");
                 transaction.setIssueType(IssueType.RETURNED);
+                transaction.setTransactionStatus(TransactionStatus.SUCCESS);
 
                 transaction.setCard(card);
                 transaction.setBook(book);
@@ -124,7 +125,7 @@ public class TransactionService {
                 card.getTransactionList().add(transaction);
                 bookList.remove(i);
                 book.setCard(null);
-                cardRepository.save(card);
+                transactionRepository.save(transaction);
                 return;
             }
         }

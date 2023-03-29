@@ -125,4 +125,30 @@ public class StudentService {
 
         return studentResponseDto;
     }
+
+    public List<BookResponseDto> getAllIssuedBooksByStudent(int id) throws Exception {
+        Student student;
+        try{
+            student = studentRepository.findById(id).get();
+        }
+        catch (Exception e){
+            throw new Exception("Invalid Student ID");
+        }
+
+        LibraryCard card = student.getCard();
+        List<Book> bookList = card.getBooksIssued();
+        List<BookResponseDto> bookResponseDtoList = new ArrayList<>();
+
+        for(Book book : bookList){
+            BookResponseDto bookResponseDto = new BookResponseDto();
+            bookResponseDto.setTitle(book.getTitle());
+            bookResponseDto.setPrice(book.getPrice());
+            bookResponseDto.setIssued(book.isIssued());
+            bookResponseDto.setGenre(book.getGenre());
+            bookResponseDto.setAuthorName(book.getAuthor().getName());
+            bookResponseDtoList.add(bookResponseDto);
+        }
+
+        return bookResponseDtoList;
+    }
 }
